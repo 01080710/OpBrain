@@ -82,4 +82,12 @@
 - 選項：A. 依業務線 AC／DW　B. 依主管的工作行為（取得、產出、檢查）　C. 拆成多個業務 Skill　D. 維持現狀
 - 決定：A。`flows/ac.md`、`flows/dw.md` 各寫業務線專屬規則（R-034、R-040～R-047；R-050～R-057）、品質檢查與輸出；兩條業務線共用的資料取得、Tickets 篩選、共通計算與檢查放 `sources.md`（新增為選用文件）。執行指令 `--flow pbi／fresh／chatgroup` 不變，腳本邏輯與設定值不變。
 - 後果：PBI 欄位屬於哪條業務線尚未定義，標為 `[待確認]`（I-010），不猜。
+### DEC-018：預留金融科技框架與稽核紀錄
+- 日期：2026-10-04　決定者：使用者　狀態：採用（框架預留；稽核紀錄已實作）
+- 背景：目標是讓這套架構能通用在金融科技領域。檢視後發現 Skill 之間耦合低，但框架層與 OP 業務綁在一起（`opbrain.roster` 寫死 team-structure），且執行紀錄 `run_log.json` 不足以應付稽核（沒有執行者、程式與規則版本、檔案雜湊、防竄改）。
+- 選項：A. 立即把 `_core` 拆成 `_framework/` + `_domain/` 並搬移程式　B. 先定好目標架構與規則（預留），稽核紀錄先做在共用執行器　C. 維持現狀
+- 決定：B。新增 `_core/framework.md`（三層架構 F-1～F-4、資料分區與機敏等級、稽核規範 A-1～A-6）；`opbrain.audit` + `opbrain.workflow` 自動寫入 `data/audit/` 雜湊鏈紀錄；新增 `_tools/audit_verify.py`；Skill 選用文件新增合規文件（範本 `_tools/template/compliance.md`）。各 Skill 腳本、設定值、報表輸出不變。
+- 取捨：程式尚未搬移，`roster.py` 仍違反 F-1（已在 framework.md 標註）；搬移會動到所有 import，需另排程並跑回歸測試。機敏等級的指派與保存期限屬合規政策，標為 `[待確認]`，不猜。
+- 後果：稽核紀錄寫不進去時流程會中止（A-4）。同 team-structure:DEC-005。
+
 [來源: 舊 DECISIONS.md、CHANGELOG.md；2026-10-01、10-02 對話；2026-10-04 對話]

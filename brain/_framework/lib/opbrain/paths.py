@@ -16,6 +16,7 @@ REPORTS = DATA / "reports"       # 最終報表（Fresh AC / DW …）
 WORK = DATA / "work"             # 每次執行的工作目錄（中間檔、run_log）
 KNOWLEDGE = DATA / "knowledge"   # 主管共同記錄：事故、註解（見 _core/conventions.md）
 BASELINE = DATA / "_baseline"    # 回歸測試用的標準答案
+AUDIT = DATA / "audit"           # 稽核紀錄：只能附加、不可刪改（不受 OPBRAIN_OUTPUT_DIR 影響）
 
 ROSTER_FILE = RAW / "roster" / "Roster.xlsx"
 

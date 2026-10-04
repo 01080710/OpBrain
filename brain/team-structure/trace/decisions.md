@@ -26,3 +26,8 @@
 - 決定：C。`skill.md`、`context.md`、`decision.md`、`trace/` 三份為必備；跨流程共用規則放選用的 `rules.md`；流程專屬的輸入、規則、步驟、檢查、輸出、例外寫在 `flows/<流程>.md`。所有 ID 原樣保留，腳本邏輯與設定值不變（只改註解中的文件路徑）。
 - 取捨：失去「一個主題一份檔」的細格子，換來一條流程讀一份檔；檔案過長時（`kb_check_structure.py` 警告 S-7）再拆。
 - 後果：新 Skill 用 `brain/_tools/template/` 的新骨架；舊版備份在 `OP_Workforce_AI_brain_backup_20261004.tar.gz`（專案上一層）。
+
+### DEC-005：預留金融科技框架與稽核紀錄
+- 日期：2026-10-04　決定者：使用者　狀態：採用
+- 決定：同 productivity:DEC-018。本 Skill 的 `check` 流程同樣自動寫入 `data/audit/`；腳本、設定值不變。
+- 後果：`_core/lib/opbrain/roster.py` 在框架層寫死本 Skill 與 OP 欄位，違反 `_core/framework.md` F-1；搬移到本 Skill 或 `_domain/` 時另行決定。

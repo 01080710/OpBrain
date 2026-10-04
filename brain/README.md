@@ -24,6 +24,7 @@
 1. 使用者的需求屬於哪個業務主題 → 讀該 Skill 的 `skill.md`（有「使用者的話 → 指令」對照）
 2. 跨 Skill 的規則與慣例 → `_core/conventions.md`（**新進 AI 必讀**）
 3. 全專案共用名詞 → `_core/glossary.md`；資料放哪裡 → `_core/data-layout.md`
+4. 資料夾分層、機敏等級、稽核紀錄 → `_core/framework.md`
 
 ## 資料夾
 ```

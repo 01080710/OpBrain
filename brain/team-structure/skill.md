@@ -1,7 +1,7 @@
 ---
 name: team-structure
 description: 團隊架構（Team Structure）— Roster 員工名冊的唯一擁有者：誰在團隊、正式姓名、Lark 顯示名、主管、班別、團隊、國家（Office）等標籤，以及各系統名字對照。所有其他 Skill 都依賴它。使用者說「檢查 Roster」「換新的 Roster」「某人為什麼對不到」「團隊有幾個人」「各國/各團隊人數」「Roster 新增欄位/標籤」時使用。
-version: 1.1.0
+version: 1.1.1
 status: active
 depends_on: []
 provides: [roster_file, op_name_set, lark_to_op_map, employee_list, roster_tags]

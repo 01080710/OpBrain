@@ -10,10 +10,11 @@ sys.path.insert(0, str(BRAIN / "_core" / "lib"))
 from opbrain.common import EXIT_GATE, InputError, run  # noqa: E402,F401
 
 # 每個 Skill 的文件結構（2026-10-04 起，productivity DEC-016、DEC-017）：
-# 必備檔 + 選用 rules.md（跨業務線共用規則）、sources.md（共用資料來源與取得流程）+ 每條業務線／流程一份 flows/<名稱>.md
+# 必備檔 + 選用 rules.md（跨業務線共用規則）、sources.md（共用資料來源與取得流程）、
+# compliance.md（資料分級與合規，_core/framework.md F-3）+ 每條業務線／流程一份 flows/<名稱>.md
 REQUIRED = ["skill.md", "context.md", "decision.md",
             "trace/decisions.md", "trace/changes.md", "trace/issues.md"]
-OPTIONAL = ["rules.md", "sources.md"]
+OPTIONAL = ["rules.md", "sources.md", "compliance.md"]
 FLOWS_DIR = "flows/"
 MAX_LINES = 300   # 超過就提醒拆檔
 NON_DOC_DIRS = ("scripts/", "config/", "work/", "dist/")

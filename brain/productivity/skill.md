@@ -1,7 +1,7 @@
 ---
 name: productivity
 description: 人效（Productivity）— 取得、整理、計算 OP 團隊的工作量資料。三條流程：pbi（下載＋合併 Power BI 的 OP Workload P.1、P.2、WD WL by Group）、fresh（Freshdesk 工單依 Roster 篩選後產出 AC／DW Fresh 模組報表）、chatgroup（Lark Group Management 匯出 → AC／DW Chatgroup Volumn）。使用者說「下載 PBI 9/1～9/6」「補跑 PBI」「強制重跑」「Combine P1」「開 PBI 登入頁」「出 AC 跟 DW fresh 報表」「跑桌面這份 Tickets_Export 資料夾」「彙總下載資料」「跑 Lark Chatgroup Volumn 9/1～9/30」時使用。
-version: 1.2.0
+version: 1.2.1
 status: active
 depends_on: [team-structure]
 provides: [pbi_combine_files, tickets_roster_tagged, fresh_ac_report, fresh_dw_report, chatgroup_volumn_files]

@@ -18,7 +18,8 @@ data/
 ├── knowledge/              主管共同紀錄：事故、註解、會議結論（見 knowledge/README.md）
 ├── work/                   每次執行的工作目錄 <skill>/<flow>/<時間>/（可隨時刪除）
 │   └── _regression/        回歸測試輸出
-└── _baseline/              回歸測試的標準答案（勿手動修改）
+├── _baseline/              回歸測試的標準答案（勿手動修改）
+└── audit/                  稽核紀錄 audit-YYYY-MM.jsonl（只能附加，見 _core/framework.md）
 ```
 
 | 路徑 | 寫入者 | 可刪除？ |
@@ -28,3 +29,4 @@ data/
 | knowledge/ | 主管（透過 AI） | 否 |
 | work/ | 流程執行器 | 可 |
 | _baseline/ | 只在規則刻意改變、經確認後更新 | 否 |
+| audit/ | 流程執行器（`opbrain.workflow`） | **否，也不可修改** |
