@@ -161,6 +161,94 @@ git switch -c 我的名字-要做的事
 
 ---
 
+## 工程師專用：分支管理
+
+### ① 切換分支
+
+**切到現有分支**
+```
+git switch 分支名字
+```
+
+**建立新分支並切過去**
+```
+git switch -c 新分支名字
+```
+
+**查看所有分支（本地 + 遠端）**
+```
+git branch -a
+```
+
+---
+
+### ② 刪除分支
+
+**刪除本地分支（已合併的分支，安全刪除）**
+```
+git branch -d 分支名字
+```
+
+**強制刪除本地分支（包含未合併的提交）**
+```
+git branch -D 分支名字
+```
+
+**刪除遠端分支（雲端）**
+```
+git push origin --delete 分支名字
+```
+或簡寫：
+```
+git push origin -d 分支名字
+```
+
+**同時刪除本地 + 遠端**
+```
+git branch -d 分支名字
+git push origin -d 分支名字
+```
+
+---
+
+### ③ 從分支合併到 main 的完整流程
+
+**步驟 1：確保本地 main 是最新版本**
+```
+git switch main
+git pull
+```
+
+**步驟 2：切到你的分支，確認所有修改都已提交**
+```
+git switch 我的分支名字
+git status
+```
+如果有未提交的修改，先執行：
+```
+git add .
+git commit -m "提交說明"
+```
+
+**步驟 3：建立 Pull Request（推薦做法）**
+```
+git push -u origin 我的分支名字
+```
+在 GitHub 網頁上按「**Compare & pull request**」，填寫說明，等待審查。有人核准後，在 GitHub 點「**Merge pull request**」完成合併。
+
+**步驟 4：合併後清理**
+```
+git switch main
+git pull
+git branch -d 我的分支名字
+```
+
+---
+
+**如果有衝突**：參考上面的「狀況二」進行解決。
+
+---
+
 ## 其他問題
 
 | 狀況 | 做法 |
