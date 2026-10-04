@@ -1,0 +1,15 @@
+# productivity / 流程 fresh 前段（Tickets 彙總篩選）的規則值。意義見 sources.md B
+
+# R-020 來源檔：data/raw/tickets_export/ 底下符合此樣式的檔案，依檔名數字排序
+source_glob: "Tickets_*.csv"
+required_columns: ["Created Time", "Group", "Tags"]
+
+# R-021 Tags 欄位，以逗號切段比對 Roster 正式姓名
+tags_column: "Tags"
+zero_width_chars: ["​"]
+
+# R-023 輸出檔名（data/COMBINE/）
+full_output_name: "Tickets Roster Tagged.csv"
+short_output_name: "Tickets Roster Tagged Short.csv"
+short_columns: ["Created Time", "Group", "Tags"]
+short_date_format: "%Y/%m/%d"

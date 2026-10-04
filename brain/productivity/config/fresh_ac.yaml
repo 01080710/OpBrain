@@ -1,0 +1,141 @@
+# productivity / 流程 fresh — AC 報表的規則值。意義與理由見 flows/ac.md R-040～R-045
+
+# R-045 模組欄位順序（= 輸出主表 C 欄之後的順序）
+module_order:
+  - "AC"
+  - "Cpa-Ac"
+  - "Cpa-Payment"
+  - "IB"
+  - "IB-Adjustment"
+  - "FCA"
+  - "Other"
+  - "CPA-Multi plan"
+  - "CPA-hybrid plan"
+  - "CPA-non-standard plan"
+  - "Other 2"
+
+# R-040 AC 模組：Group 完全相同（大小寫、空白都要一樣）
+#       "(OP)Acc-Account Owner Transfer"、"(OP)Acc-ID/POA" 於 2026-09-21 經使用者確認加入（DEC-006）
+ac_groups:
+  - "Ticket Admin team"
+  - "(OP)Account Team"
+  - "(OP)Acc-CES"
+  - "(OP)Acc-QC Ranger"
+  - "(OP)Acc-CS"
+  - "(OP)Acc-AEJ"
+  - "(OP)Acc-ASIC"
+  - "OWS Team"
+  - "Internal Tasks"
+  - "Translation - KOM"
+  - "(OP)Acc-Account Owner Transfer"
+  - "(OP)Acc-ID/POA"
+
+# R-041 單一 Group 模組（新舊名稱並存：來源系統曾改名，見 DEC-005）
+group_module_map:
+  "Cpa-Ac": ["(OP)Cpa-AC team"]
+  "Cpa-Payment": ["(OP)Cpa-Payment team"]
+  "IB": ["(OP)Acc-AAK", "(OP)Acc-New IB"]
+  "IB-Adjustment": ["(OP)Acc-AAK (IB Adjustment)", "(OP)Acc-IB Adjustment"]
+  "FCA": ["(OP)FCA-Tickets"]
+
+# R-042 Other 2：已知、但不單獨成模組的 Group（注意 "Settlement Team " 結尾有空格，與來源一致）
+other2_groups:
+  - "(OP)Withdrawal Team"
+  - "(OP)Deposit Team"
+  - "Settlement Team "
+  - "(OP)Commission team"
+  - "Admin Team"
+  - "(OP) ASIC - Account Team"
+  - "BIT Team"
+  - "Risk Team - VIG"
+  - "(OP) ASIC - Deposit Team"
+  - "(OP) ASIC - Withdraw Team"
+  - "Trading Team"
+  - "Promotion Team"
+  - "(HA)Deposit Team"
+  - "No Group"
+  - "ASIC - Outlook"
+  - "(OP)FCA-Outlook"
+  - "ASIC - Trading Team"
+  - "FP Team"
+
+# R-044 關鍵字模組：不看 Group，Tags 含關鍵字（不分大小寫子字串）
+#       「CPA-non-standard plan」欄名與關鍵字 "CPA Standard Commission Plan Update" 不一致是刻意的（DEC-004）
+keyword_rules:
+  "CPA-Multi plan": "CPA Multi-Tier Commission Plan Update"
+  "CPA-hybrid plan": "CPA Hybrid Commission Plan Update"
+  "CPA-non-standard plan": "CPA Standard Commission Plan Update"
+
+# R-046 輸出
+main_sheet_name: "fresh Template Batch (AC)"
+output_name_template: "AC Fresh Report {start} - {end}.xlsx"
+
+# R-047 固定名單（55 人主名單 / VN5）。預設名單是 Roster 全員（R-033）
+#       VN5 名字照 Tags 實際的「姓在前」詞序寫（DEC-007）
+employee_presets:
+  main55:
+    output_name_template: "AC Fresh Report main55 {start} - {end}.xlsx"
+    names:
+      - "Omar Guerraoui"
+      - "Cisse Papa Amadou"
+      - "Laura Lim"
+      - "Joanne Loy"
+      - "Liyana Pertiwi"
+      - "Alex Lee"
+      - "Junquan Ko"
+      - "Priyatharishini Saravanan"
+      - "Teo Sui Kee"
+      - "Rina Tan"
+      - "Vicky Nak"
+      - "Aileen Chiang"
+      - "Ummu Sarah"
+      - "Sky Wong"
+      - "Kc Choi"
+      - "Calvin Lim"
+      - "Nurul Athirah"
+      - "Kaisheng Tham"
+      - "Elton Foo"
+      - "Grace Tee"
+      - "Ann Liao"
+      - "Jim Chen"
+      - "John Wu"
+      - "Lin Chen"
+      - "Victor Wang"
+      - "Alice Liao"
+      - "Melody Hu"
+      - "Adeline Chen"
+      - "Poya Huang"
+      - "Evan Chang"
+      - "Ken Lai"
+      - "Sam Lu"
+      - "Phoebe Sun"
+      - "Wilson Wen"
+      - "Sen Yu"
+      - "Xinyue Chong"
+      - "Chloe Chen"
+      - "Savrina Goh"
+      - "Windy Chen"
+      - "Wendy Wu"
+      - "Hailey Wu"
+      - "Martin Lin"
+      - "Thuy Duong Nguyen"
+      - "Nguyen Minh Quan"
+      - "Pham Thi Huyen Chau"
+      - "Thi Hong Tham Nguyen"
+      - "Bui Ngoc Van Anh"
+      - "Thuy Phuong Uyen Nguyen"
+      - "Chau Ngoc Thinh"
+      - "Tran Duc Huy"
+      - "Vo Duc Tan"
+      - "Nguyen Thi Lap"
+      - "Nguyen Thi Xuan Lan"
+      - "Vo Hoang Thuan"
+      - "Ngo Thi Dieu Huyen"
+  vn5:
+    output_name_template: "AC Fresh Report vn5 {start} - {end}.xlsx"
+    names:
+      - "Nguyen Thi Xuan Lan"
+      - "Bui Ngoc Van Anh"
+      - "Vo Hoang Thuan"
+      - "Ngo Thi Dieu Huyen"
+      - "Chau Ngoc Thinh"

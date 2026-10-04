@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# Secrets / credentials
+.env
+.env.*
+!.env.example
+.secrets/
+secrets/
+credentials/
+*.pem
+*.key
+*.pfx
+*.p12
+*_credentials.json
+*_secret.json
+
+# Business data — never commit (employee names, workloads, tickets)
+# Keep only the folder structure and the knowledge README.
+data/**
+!data/**/
+!data/knowledge/README.md
+
+# Claude Code: only the generated skill entries are versioned
+.claude/*
+!.claude/skills/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+~$*

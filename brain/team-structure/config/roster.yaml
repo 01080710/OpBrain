@@ -1,0 +1,20 @@
+# team-structure 規則的「值」。意義與理由見 brain/team-structure/rules.md
+# 程式實作：brain/_core/lib/opbrain/roster.py（所有 Skill 共用）
+
+# R-001 Roster 的唯一位置：第一個工作表
+roster_file: data/raw/roster/Roster.xlsx
+
+# R-002 正式姓名欄的表頭（比對時去空白、不分大小寫；依序找第一個存在的）
+#       2026-09 版 Roster 把 "OP Name" 改名為 "CRM OP Name"
+op_name_headers: ["OP Name", "CRM OP Name"]
+
+# R-004 Lark 顯示名欄的表頭
+lark_name_headers: ["Lark Name"]
+
+# R-005 以「第一欄」當員工名單時，第一列若是這些字（不分大小寫）就視為表頭略過
+header_like_first_cells: ["name", "op name", "crm op name", "employee", "employee name"]
+
+# R-006 讀檔時固定使用的範圍上限（部分匯出檔的工作表尺寸資訊不正確）
+read_bounds:
+  max_col: 30
+  max_row: 200000

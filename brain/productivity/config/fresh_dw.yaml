@@ -1,0 +1,39 @@
+# productivity / 流程 fresh — DW 報表的規則值。意義與理由見 flows/dw.md R-050～R-056
+# 來源：使用者 2026-10-01 提供的 Excel 公式（參照「AC DW Category」工作表 D2～D11）
+
+# R-056 模組欄位順序
+module_order:
+  - "WD fresh"
+  - "DP fresh"
+  - "Promo Fresh"
+  - "Other Fresh"
+  - "Inst -WD"
+  - "Inst -DP"
+  - "FCA Fresh"
+  - "EXTRAOPWork"
+
+# R-050～R-052 Group 模組（比對：不分大小寫、完全相同，同 Excel COUNTIF）
+group_modules:
+  "WD fresh": ["(OP)Withdrawal Team"]                                   # D2
+  "DP fresh": ["(OP)Deposit Team", "(HA)Deposit Team", "Settlement Team "]  # D3:D5
+  "FCA Fresh": ["(OP)FCA-Tickets"]                                      # D6
+
+# R-053 Other Fresh = Group 不在這 5 個之內（含空白 Group，也含 AC 端的 Group）
+other_excluded_groups:
+  - "(OP)Withdrawal Team"
+  - "(OP)Deposit Team"
+  - "(HA)Deposit Team"
+  - "Settlement Team "
+  - "(OP)FCA-Tickets"
+
+# R-054 關鍵字模組（Tags 含關鍵字，不分大小寫子字串，同 Excel SEARCH）
+#       Promo Fresh 只搜 D7，不含 D8 "Promo"（依使用者公式，DEC-008）
+keyword_modules:
+  "Promo Fresh": "deposit bonus issue"                    # D7
+  "Inst -WD": "Institutional Client Withdrawals"          # D9
+  "Inst -DP": "Institutional Client Deposit"              # D10
+  "EXTRAOPWork": "EXTRAOPWork"                            # D11
+
+# R-057 輸出
+main_sheet_name: "fresh Template Batch (DW)"
+output_name_template: "DW Fresh Report {start} - {end}.xlsx"

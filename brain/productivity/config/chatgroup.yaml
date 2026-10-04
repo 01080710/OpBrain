@@ -1,0 +1,35 @@
+# productivity / 流程 chatgroup 的規則值。意義與理由見 sources.md C R-060～R-065
+
+# R-060 唯一來源檔（2026-09-21 起的標準格式，DEC-009）
+source_file: "data/raw/lark_chatgroup/Group Management.xlsx"
+
+# R-061 依工作表名稱分 AC / DW：DW = 這 3 張；AC = 其餘全部
+targets:
+  ac:
+    display_name: "AC Chatgroup Volumn"
+    sheet_names: null
+    exclude_sheet_names: ["Deposit Support", "Withdrawal Support", "Deposit & Withdrawal Support"]
+    op_col_candidates: ["OP Name (Actual)"]       # R-062
+    output_name_template: "AC Chatgroup Volumn {start} to {end}.xlsx"
+  dw:
+    display_name: "DW Chatgroup Volumn"
+    sheet_names: ["Deposit Support", "Withdrawal Support", "Deposit & Withdrawal Support"]
+    exclude_sheet_names: null
+    op_col_candidates: ["OP name"]                # R-062
+    output_name_template: "DW Chatgroup Volumn {start} to {end}.xlsx"
+
+# R-062 其他欄位的表頭（不分大小寫）
+date_header: "date"
+group_header: "group name"
+
+# R-064 Roster 對不到時的標記（不刪除該列）
+inactive_flag: "Inactive from Roster"
+
+# R-065 輸出欄位
+output_columns: ["Date", "OP Name", "Group Name", "Source", "Roster Status"]
+output_date_format: "yyyy/mm/dd"
+
+# R-066 讀檔範圍上限（部分匯出檔的工作表尺寸資訊不正確）
+read_bounds:
+  max_col: 30
+  max_row: 200000
