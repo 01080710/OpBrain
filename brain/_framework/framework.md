@@ -1,7 +1,7 @@
 # 金融科技框架（資料夾架構 + 稽核紀錄）
 
 > 目標：這套架構能直接用在金融科技團隊（受稽核、處理個資與交易資料）。
-> 這份文件定義**目標架構**與**稽核紀錄規範**。標為「預留」的部分已定好規則、尚未搬移程式；
+> 這份文件定義**資料夾架構**與**稽核紀錄規範**。標為「預留」的部分已定好規則、尚未實作；
 > 標為 `[待確認]` 的是合規政策，由使用者（或公司法遵）決定，AI 不得自行填值。
 
 ---
@@ -12,28 +12,35 @@
 
 ```
 brain/
-├── _framework/   第 1 層 框架：任何團隊都能直接搬走（不含任何業務名詞）
-├── _domain/      第 2 層 組織：這個組織專屬的名詞、資料配置、共用主檔介面
-└── <skill>/      第 3 層 業務：一個業務主題一個 Skill
+├── skill.md            入口：① 領域對照表（唯一註冊到 .claude/skills/ 的入口）
+├── _framework/         第 1 層 框架：任何團隊都能直接搬走（不含任何業務名詞）
+├── _org/               第 2 層 組織：這個組織專屬的名詞、資料配置、共用主檔介面
+└── <領域>/
+    ├── domain.md       分流：② 面向 → 子 Skill 對照表
+    └── <skill>/        第 3 層 業務：一個業務主題一個 Skill，放在擁有它的領域底下
 ```
+
+- 「領域」是分流用的目錄，不是一層程式（依賴方向不變）：Skill 放在**擁有它的領域**底下（`brain/<領域>/<skill>/`），和該領域的 `domain.md` 同一層；其他領域需要時，在自己的 `domain.md` 用路徑跨資料夾引用（例如未來的財務領域引用 `brain/management/team-structure/skill.md`）。同一個 Skill 只有一個擁有領域，對應 F-2。
+- 「組織」（`_org/`）是這個組織共用的名詞與資料配置，和業務領域無關。
+- 分流流程與檢查（E-1～E-4）見專案根目錄 `SystemDesign.md`。
 
 | 規則 | 說明 |
 |---|---|
 | F-1 依賴方向 | Skill → 組織 → 框架。框架不得 import、讀取或寫死任何 Skill 名稱與業務欄位 |
 | F-2 主檔單一擁有者 | 每份主檔（Roster、客戶、帳戶…）只有一個 Skill 能寫；其他 Skill 只能透過介面讀 |
-| F-3 合規文件 | 處理個資或受監管資料的 Skill，必須有 `compliance.md`（範本：`_tools/template/compliance.md`） |
+| F-3 合規文件 | 處理個資或受監管資料的 Skill，必須有 `compliance.md`（範本：`_framework/tools/template/compliance.md`） |
 | F-4 稽核 | 所有流程經 `opbrain.workflow` 執行，自動寫稽核紀錄（見第二節）；不得另寫繞過執行器的流程 |
 
-**目前對照（預留，尚未搬移）：**
+**目前對照（2026-10-05）：**
 
-| 目標位置 | 現在位置 | 狀態 |
+| 位置 | 內容 | 狀態 |
 |---|---|---|
-| `_framework/lib/` | `_core/lib/opbrain/`（`common`、`config`、`env`、`paths`、`workflow`、`audit`） | 符合 F-1，待搬移 |
-| `_framework/tools/` | `_tools/` | 符合 F-1，待搬移 |
-| `_domain/` | `_core/conventions.md`、`glossary.md`、`data-layout.md` | 待搬移 |
-| `_domain/` 或 team-structure | `_core/lib/opbrain/roster.py` | **不符合 F-1**（框架層寫死 team-structure 與 OP 欄位），搬移時處理 |
+| `_framework/lib/opbrain/` | `common`、`config`、`env`、`paths`、`workflow`、`audit` | 已搬移，符合 F-1 |
+| `_framework/tools/` | 檢查、建立新 Skill、產生入口、回歸比對、稽核驗證 | 已搬移，符合 F-1 |
+| `_org/` | `conventions.md`、`glossary.md`、`data-layout.md` | 已搬移 |
+| `_framework/lib/opbrain/roster.py` | 讀 Roster（實作 team-structure 的規則） | **不符合 F-1**（框架層寫死 team-structure 與 OP 欄位）；目標位置是 `_org/` 或 team-structure |
 
-搬移會動到所有腳本的 import，必須另外排程，並以 `regression_check.py` 確認結果不變。
+`roster.py` 搬移會動到所有讀 Roster 的腳本 import，必須另外排程，並以 `regression_check.py` 確認結果不變。
 
 ### 2. 資料：依用途分區、依機敏等級管理
 
@@ -69,7 +76,7 @@ brain/
 | A-3 不記資料內容 | 只記誰、何時、哪版程式與設定、檔案雜湊值、結果；**不記姓名、工單文字、金額等資料值** |
 | A-4 寫不進就停 | 稽核紀錄寫入失敗時，流程不得繼續（例外直接中止） |
 | A-5 時間一律 UTC | ISO 8601，到毫秒，例：`2026-10-04T08:15:30.123Z` |
-| A-6 可驗證 | `python brain/_tools/audit_verify.py` 重算整條雜湊鏈 |
+| A-6 可驗證 | `python brain/_framework/tools/audit_verify.py` 重算整條雜湊鏈 |
 
 ### 2. 位置與格式
 - `data/audit/audit-YYYY-MM.jsonl`（UTC 月份），一行一筆 JSON（鍵排序、無空白）

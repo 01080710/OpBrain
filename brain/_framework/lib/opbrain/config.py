@@ -1,8 +1,8 @@
-"""讀取 Skill 設定檔 brain/<skill>/config/<name>.yaml。
+"""讀取 Skill 設定檔 brain/<領域>/<skill>/config/<name>.yaml。
 
 設定檔放規則的「值」，每一段都標註對應的規則 ID（R-xxx）；
 規則的意義與理由寫在該 Skill 的 rules.md 或 flows/<流程>.md。兩邊的 ID 由
-brain/_tools/check_config_ids.py 檢查是否一致。
+brain/_framework/tools/check_config_ids.py 檢查是否一致。
 """
 from functools import lru_cache
 

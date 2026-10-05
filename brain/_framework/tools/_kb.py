@@ -1,17 +1,17 @@
-"""_tools 共用：列出 Skill、ID 樣式。"""
+"""_framework/tools 共用：列出 Skill、ID 樣式。"""
 import re
 import sys
 from pathlib import Path
 
 TOOLS = Path(__file__).resolve().parent
-BRAIN = TOOLS.parent
-sys.path.insert(0, str(BRAIN / "_core" / "lib"))
+BRAIN = TOOLS.parents[1]
+sys.path.insert(0, str(BRAIN / "_framework" / "lib"))
 
 from opbrain.common import EXIT_GATE, InputError, run  # noqa: E402,F401
 
 # 每個 Skill 的文件結構（2026-10-04 起，productivity DEC-016、DEC-017）：
 # 必備檔 + 選用 rules.md（跨業務線共用規則）、sources.md（共用資料來源與取得流程）、
-# compliance.md（資料分級與合規，_core/framework.md F-3）+ 每條業務線／流程一份 flows/<名稱>.md
+# compliance.md（資料分級與合規，_framework/framework.md F-3）+ 每條業務線／流程一份 flows/<名稱>.md
 REQUIRED = ["skill.md", "context.md", "decision.md",
             "trace/decisions.md", "trace/changes.md", "trace/issues.md"]
 OPTIONAL = ["rules.md", "sources.md", "compliance.md"]
@@ -25,10 +25,31 @@ XREF_RE = re.compile(rf"\b([a-z][a-z0-9\-]*|_core):({ID})\b")   # 跨 Skill 引�
 DEF_RE = re.compile(rf"^\|\s*({ID})\s*\||^#{{1,6}}\s*({ID})\b")
 
 
+def _skill_dirs():
+    """{Skill 名稱: 資料夾}。Skill 放在 brain/<領域>/<skill>/（有 skill.md；領域與 Skill 名稱都不以 _ 開頭）。"""
+    out = {}
+    for domain in sorted(BRAIN.iterdir()):
+        if not domain.is_dir() or domain.name.startswith("_"):
+            continue
+        for p in sorted(domain.iterdir()):
+            if p.is_dir() and not p.name.startswith("_") and (p / "skill.md").is_file():
+                if p.name in out:
+                    raise InputError(f"Skill name {p.name!r} used twice: {out[p.name]} and {p}")
+                out[p.name] = p
+    return out
+
+
 def skills():
-    """brain/ 底下的 Skill（有 skill.md、名稱不以 _ 開頭）。"""
-    return sorted(p.name for p in BRAIN.iterdir()
-                  if p.is_dir() and not p.name.startswith("_") and (p / "skill.md").is_file())
+    """所有 Skill 名稱。"""
+    return sorted(_skill_dirs())
+
+
+def skill_root(name: str) -> Path:
+    """Skill 的資料夾 brain/<領域>/<skill>/。"""
+    dirs = _skill_dirs()
+    if name not in dirs:
+        raise InputError(f"unknown skill {name!r}; known: {sorted(dirs)}")
+    return dirs[name]
 
 
 def is_allowed_doc(rel: str) -> bool:

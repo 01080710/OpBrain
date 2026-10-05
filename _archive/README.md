@@ -7,6 +7,7 @@
 | `abandoned_pbi_auto_login/` | Power BI 自動登入嘗試（pbi_login.py、_pbi_login_wait.py、pbi_workflow.py、run_pbi.bat） | 未完成即放棄（productivity DEC-010） |
 | `skeleton_never_implemented/` | 最初的每日 Pipeline 骨架（main.py、metrics、reports、ai、lark_collector…）、舊 config/settings.py、空的 tests/output/logs | 全是 `NotImplementedError`，從未接上任何資料 |
 | `legacy_working_code/` | 重構前可用的舊工具（src/、fresh_ac_report/、run_*.py） | 已拆成 `brain/productivity/scripts/` 的步驟腳本，並逐格驗證輸出相同 |
+| `legacy_40_file_template/` | 舊版 Skill 模板的 34 份分類文件（constraints/、context/、execution/、input/、logic/、output/、safety/、sop/、transformation/、validation/）與 trace/investigation.md、lessons-learned.md | 2026-10-05 封存。已由「必備檔 + 每條流程一份」取代（productivity DEC-016）；留在 `template/` 會被 `new_skill.py` 複製進新 Skill |
 
 舊的專案文件（PROJECT.md、DECISIONS.md…）內容已搬進各 Skill，原檔在
 `Desktop/OP_Workforce_AI_backup_20261002.zip`（含舊的 Git 歷史）。

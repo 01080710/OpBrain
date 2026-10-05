@@ -1,8 +1,8 @@
-"""稽核紀錄（audit log）。規範見 brain/_core/framework.md「二、稽核紀錄」。
+"""稽核紀錄（audit log）。規範見 brain/_framework/framework.md「二、稽核紀錄」。
 
 - 位置：data/audit/audit-YYYY-MM.jsonl（UTC 月份），一行一筆 JSON，只能附加
 - 每筆含 prev_hash 與 hash（SHA-256）形成雜湊鏈；改、刪、插入任何一行，
-  brain/_tools/audit_verify.py 都會發現
+  brain/_framework/tools/audit_verify.py 都會發現
 - 只記「誰、何時、用哪版程式與設定、產生了哪些檔（雜湊值）、結果」，不記資料內容
 """
 import getpass

@@ -14,7 +14,7 @@ import os
 import re
 from datetime import date
 
-from _kb import BRAIN, InputError, run, skills
+from _kb import BRAIN, skill_root, InputError, run, skills
 
 SEMVER_ROW = re.compile(r"^\|\s*(\d+)\.(\d+)\.(\d+)\s*\|")
 
@@ -32,7 +32,7 @@ def main() -> int:
     ap.add_argument("--author", default=os.environ.get("USERNAME") or os.environ.get("USER") or "[待填]")
     ap.add_argument("--version")
     args = ap.parse_args()
-    root = BRAIN / args.skill
+    root = skill_root(args.skill)
 
     changes = root / "trace" / "changes.md"
     lines = changes.read_text(encoding="utf-8").splitlines()

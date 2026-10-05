@@ -14,11 +14,11 @@
 """
 import argparse
 
-from _kb import BRAIN, FLOWS_DIR, MAX_LINES, REQUIRED, docs, frontmatter, is_allowed_doc, resolve, run
+from _kb import BRAIN, skill_root, FLOWS_DIR, MAX_LINES, REQUIRED, docs, frontmatter, is_allowed_doc, resolve, run
 
 
 def check(skill, strict):
-    root = BRAIN / skill
+    root = skill_root(skill)
     errors, warnings = [], []
     for rel in REQUIRED:
         if not (root / rel).is_file():

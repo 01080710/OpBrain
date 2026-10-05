@@ -1,0 +1,31 @@
+# productivity / 流程 pbi 的規則值。意義與理由見 brain/management/productivity/sources.md A
+
+# R-001 Power BI 連線：人工登入的 Edge 須以此 port 開啟除錯模式（含 MFA，無法自動化）
+remote_debugging_port: 9333
+download_timeout_seconds: 45
+edge_profile_dir: "%LOCALAPPDATA%/pbi_edge_profile"
+
+# R-002 三份報表：顯示名稱（Power BI 頁籤名稱、原始資料夾名稱）、原始檔前綴、
+#       原始檔表頭列數、合併輸出檔名（P1 後的雙底線是刻意的，與參考檔一致）
+reports:
+  op_workload_p1:
+    display_name: "OP Workload P.1"
+    raw_prefix: "OP_Workload_P1"
+    header_rows_in_raw: 1
+    output_name_template: "COMBINE-OP_Workload_P1__{start} to {end}.xlsx"
+  op_workload_p2:
+    display_name: "OP Workload P.2"
+    raw_prefix: "OP_Workload_P2"
+    header_rows_in_raw: 1
+    output_name_template: "COMBINE-OP_Workload_P2_{start} to {end}.xlsx"
+  wd_wl_by_group:
+    display_name: "WD WL by Group"
+    raw_prefix: "WD_WL_by_Group"
+    header_rows_in_raw: 2
+    output_name_template: "COMBINE-WD_WL_by_Group_{start} to {end}.xlsx"
+
+# R-004 每份原始匯出檔最後固定有 3 列非資料（重複的 Total、空白、篩選說明）
+trailing_non_data_rows: 3
+
+# R-010 下載失敗時整批自動重試的次數上限（只重抓缺少的檔案）
+max_download_attempts: 3

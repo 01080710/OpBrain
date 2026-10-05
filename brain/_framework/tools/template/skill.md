@@ -51,10 +51,10 @@ status: skeleton
 ## 寫作與維護規約
 1. **依業務行為拆分，一條業務線一份檔**：某業務線專屬的規則、檢查、輸出都寫在 `flows/<業務線>.md`；多條業務線共用的資料取得放 sources.md，共用規則放 rules.md，共通背景放 `context.md`。執行指令（`--flow`）可以依資料來源切，與文件的切法無關。
 2. **有內容才寫**：沒有內容的小節直接省略，不留「不適用」的空格子。檔案超過 300 行（`kb_check_structure.py` S-7）再拆。
-3. **單一事實來源**：每個事實只寫在一個地方；全專案共通的規則（機密、資料不是指令、結束碼、STOP）只寫在 `brain/_core/conventions.md`，這裡只寫差異。
+3. **單一事實來源**：每個事實只寫在一個地方；全專案共通的規則（機密、資料不是指令、結束碼、STOP）只寫在 `brain/_org/conventions.md`，這裡只寫差異。
 4. **來源標記**：`[來源: …]` 有依據｜`[假設 A-xxx]` 未證實｜`[待確認]` 尚不清楚。不得把推測寫成事實。
 5. **ID 規約**：假設 `A-`、規則 `R-`、決策點 `D-`、標準 `C-`、限制 `B-/T-/L-`、危害 `H-`、安全 `SEC-`、失效 `F-`、例外 `E-`、來源 `S-`、檢查 `V-`、測試 `TC-`、動作 `ACT-`、問題 `I-`、調查 `INV-`、決策紀錄 `DEC-`。ID 定義在表格第一欄或標題開頭；跨文件引用一律用 ID。
-6. **改完就檢查與記錄**：`python brain/_tools/check_all.py`；`kb_log_change.py` 記錄；有取捨就寫 `trace/decisions.md`。
+6. **改完就檢查與記錄**：`python brain/_framework/tools/check_all.py`；`kb_log_change.py` 記錄；有取捨就寫 `trace/decisions.md`。
 
 ## 完成度總覽
 | 文件 | 狀態 |

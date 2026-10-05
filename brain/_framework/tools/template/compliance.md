@@ -3,7 +3,7 @@
 > **核心問題**：這個 Skill 處理哪些受保護的資料？各是什麼機敏等級、保存多久、誰能看、依據是什麼？
 > **狀態**：`skeleton`｜**最後更新**：[待填]｜**負責人**：[待填]
 
-處理個資或受監管資料的 Skill 必填（`_core/framework.md` F-3）。機敏等級定義見 `_core/framework.md` 一、2。
+處理個資或受監管資料的 Skill 必填（`_framework/framework.md` F-3）。機敏等級定義見 `_framework/framework.md` 一、2。
 所有值由使用者或法遵確認，AI 不得自行填寫。
 
 ## 資料清單

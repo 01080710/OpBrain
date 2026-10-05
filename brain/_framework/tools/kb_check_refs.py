@@ -12,21 +12,21 @@ R-3 同一個 ID 在同一個 Skill 內沒有被定義兩次
 """
 import argparse
 
-from _kb import BRAIN, ID_RE, XREF_RE, defined_ids, docs, resolve, run, skills
+from _kb import BRAIN, skill_root, ID_RE, XREF_RE, defined_ids, docs, resolve, run, skills
 import re
 
-EXTERNAL_DOCS = {"README.md", "CLAUDE.md", "AGENTS.md", "SKILL.md"}   # 專案層級的檔名，不是本 Skill 的文件
+EXTERNAL_DOCS = {"README.md", "CLAUDE.md", "AGENTS.md", "SKILL.md", "SystemDesign.md", "GITCOMMAND.md"}   # 專案層級的檔名，不是本 Skill 的文件
 PATH_RE = re.compile(r"`([A-Za-z0-9_\-]+(?:/[A-Za-z0-9_\-]+)*\.md)(?:#([\w\-]+))?`")
 
 
 def check(skill, all_defined):
-    root = BRAIN / skill
+    root = skill_root(skill)
     d = docs(root)
     defined = all_defined[skill]
     errors = []
     for rel, text in d.items():
         for path, anchor in PATH_RE.findall(text):
-            if path in EXTERNAL_DOCS or path.startswith(("brain/", "data/", "_core/", "_tools/")):
+            if path in EXTERNAL_DOCS or path.startswith(("brain/", "data/", "_core/", "_tools/", "_org/", "_framework/")):
                 continue
             if path not in d:
                 errors.append(f"R-1 {rel}: path not found: {path}")
@@ -57,7 +57,7 @@ def main() -> int:
     ap.add_argument("--skill")
     ap.add_argument("--all", action="store_true")
     args = ap.parse_args()
-    all_defined = {s: defined_ids(BRAIN / s) for s in skills()}
+    all_defined = {s: defined_ids(skill_root(s)) for s in skills()}
     ok = all([check(s, all_defined) for s in resolve(args.skill, args.all)])
     return 0 if ok else 1
 

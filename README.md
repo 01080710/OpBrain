@@ -20,13 +20,13 @@ copy .env.example .env                                   # 填入 PBI_REPORT_URL
 
 不用 AI 也可以直接執行（不帶參數會逐項詢問）：
 ```
-.venv\Scripts\python.exe brain\productivity\scripts\run_workflow.py
+.venv\Scripts\python.exe brain\management\productivity\scripts\run_workflow.py
 ```
 
 ## 資料夾
 | 資料夾 | 內容 |
 |---|---|
 | `brain/` | 大腦：每個業務主題一個 Skill（規則、作業程序、程式）＋共用層 |
-| `data/` | 所有真實資料與輸出（不入版控），見 `brain/_core/data-layout.md` |
+| `data/` | 所有真實資料與輸出（不入版控），見 `brain/_org/data-layout.md` |
 | `_archive/` | 已停用的舊程式，只供參考，不要使用 |
-| `.claude/skills/` | 自動產生的 Claude 入口，不要手改 |
+| `.claude/skills/` | 自動產生的 Claude 入口（只有母入口 `opbrain`，指向 `brain/skill.md`），不要手改 |

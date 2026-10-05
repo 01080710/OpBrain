@@ -2,11 +2,12 @@
 """
 （知識庫維護）建立新的業務主題 Skill
 
-從 brain/_tools/template/ 複製文件骨架（必備檔 + flows/flow.md）到 brain/<name>/，填好 frontmatter 的 name、
+從 brain/_framework/tools/template/ 複製文件骨架（必備檔 + flows/flow.md）到 brain/<領域>/<name>/，填好 frontmatter 的 name、
 建立 config/ 與 scripts/（含 _bootstrap.py、run_workflow.py 範本），
 最後重新產生 .claude/skills/ 的入口。
 
-用法：python new_skill.py --name scheduling --title "排班" --depends-on team-structure
+用法：python new_skill.py --domain management --name scheduling --title "排班" --depends-on team-structure
+建好後要把 brain/<領域>/<name>/skill.md 加進該領域 domain.md 的面向對照表（否則 E-3 擋下）。
 """
 import argparse
 import re
@@ -14,7 +15,7 @@ import shutil
 import subprocess
 import sys
 
-from _kb import BRAIN, TOOLS, InputError, run
+from _kb import BRAIN, TOOLS, InputError, run, skill_root, skills
 
 RUN_WORKFLOW = '''#!/usr/bin/env python3
 """
@@ -51,13 +52,18 @@ if __name__ == "__main__":
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="建立新 Skill")
+    ap.add_argument("--domain", required=True, help="擁有這個 Skill 的領域資料夾，例如 management（需已有 domain.md）")
     ap.add_argument("--name", required=True, help="英文小寫加連字號，例如 scheduling")
     ap.add_argument("--title", required=True, help="中文名稱，例如 排班")
     ap.add_argument("--depends-on", default="team-structure", help="逗號分隔")
     args = ap.parse_args()
     if not re.fullmatch(r"[a-z][a-z0-9\-]*", args.name):
         raise InputError("name must be lowercase letters, digits and hyphens")
-    dest = BRAIN / args.name
+    if not (BRAIN / args.domain / "domain.md").is_file():
+        raise InputError(f"brain/{args.domain}/domain.md not found; create the domain first")
+    if args.name in skills():
+        raise InputError(f"Skill {args.name!r} already exists at {skill_root(args.name)}")
+    dest = BRAIN / args.domain / args.name
     if dest.exists():
         raise InputError(f"{dest} already exists")
 
@@ -73,13 +79,14 @@ def main() -> int:
     (dest / "config").mkdir()
     scripts = dest / "scripts"
     scripts.mkdir()
-    shutil.copy2(BRAIN / "productivity" / "scripts" / "_bootstrap.py", scripts / "_bootstrap.py")
+    shutil.copy2(skill_root("productivity") / "scripts" / "_bootstrap.py", scripts / "_bootstrap.py")
     (scripts / "_lib").mkdir()
     (scripts / "run_workflow.py").write_text(RUN_WORKFLOW.format(name=args.name), encoding="utf-8")
 
     print(f"created {dest}")
     subprocess.run([sys.executable, str(TOOLS / "sync_claude_skills.py")])
-    print("下一步：填寫 skill.md 的 description（使用者會怎麼說）、context.md，再把 flows/flow.md 改名為流程名稱並填寫。")
+    print(f"下一步：把 `brain/{args.domain}/{args.name}/skill.md` 加進 brain/{args.domain}/domain.md 的面向對照表，"
+          "並在 brain/skill.md 的 description 補上使用者會怎麼說；再填寫 skill.md、context.md，把 flows/flow.md 改名為流程名稱並填寫。")
     return 0
 
 

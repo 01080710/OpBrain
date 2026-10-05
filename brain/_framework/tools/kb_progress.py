@@ -11,7 +11,7 @@
 import argparse
 import re
 
-from _kb import BRAIN, docs, resolve, run
+from _kb import BRAIN, skill_root, docs, resolve, run
 
 LEVELS = ["skeleton", "draft", "reviewed", "active"]
 STATUS_RE = re.compile(r"\*\*狀態\*\*：`(\w+)`")
@@ -28,7 +28,7 @@ def file_stats(text: str) -> dict:
 
 
 def report(skill, write):
-    root = BRAIN / skill
+    root = skill_root(skill)
     summary = {rel: file_stats(text) for rel, text in docs(root).items() if rel != "skill.md"}
     print(f"\n[{skill}]")
     print(f"{'doc':<24}{'status':<10}{'[待填]':>8}{'[待確認]':>9}{'未勾選':>8}")

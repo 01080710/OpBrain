@@ -5,7 +5,7 @@
 職責：交付或提交前，掃描目錄中是否夾帶金鑰、token、私鑰、密碼。
       輸出只列「檔案:行號 規則名稱」，絕不印出命中的內容（避免二次洩漏）。
 
-文件對應：brain/_core/conventions.md §9（機密不入庫）
+文件對應：brain/_org/conventions.md §9（機密不入庫）
 規則：private-key、aws-access-key、api-key-like、slack-token、jwt、assignment（key/secret/token/password = "..."）
 略過：.git、node_modules、__pycache__、dist、二進位檔、大於 1MB 的檔；
       行內含 `nosecret` 標記者視為已人工確認的誤報

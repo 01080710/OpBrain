@@ -13,13 +13,13 @@ C-4 sources.md、flows/*.md 登記的每個動作 ID，都要有一支腳本的 
 import argparse
 import re
 
-from _kb import BRAIN, FLOWS_DIR, ID_RE, OPTIONAL, XREF_RE, defined_ids, resolve, run, skills
+from _kb import BRAIN, skill_root, FLOWS_DIR, ID_RE, OPTIONAL, XREF_RE, defined_ids, resolve, run, skills
 
 ACT_HEAD = re.compile(r'^"""\s*\n(ACT-\d{2})\b', re.MULTILINE)
 
 
 def check(skill, all_defined):
-    root = BRAIN / skill
+    root = skill_root(skill)
     defined = all_defined[skill]
     def in_spec(where):   # 定義在 rules.md、sources.md 或 flows/*.md
         return any(w in OPTIONAL or w.startswith(FLOWS_DIR) for w in where)
@@ -59,7 +59,7 @@ def main() -> int:
     ap.add_argument("--skill")
     ap.add_argument("--all", action="store_true")
     args = ap.parse_args()
-    all_defined = {s: defined_ids(BRAIN / s) for s in skills()}
+    all_defined = {s: defined_ids(skill_root(s)) for s in skills()}
     ok = all([check(s, all_defined) for s in resolve(args.skill, args.all)])
     return 0 if ok else 1
 
